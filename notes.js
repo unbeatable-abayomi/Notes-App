@@ -1,11 +1,8 @@
 const fs = require('fs');
 const chalk = require('chalk');
 
-const getNotes =  function ()  {
-	return 'Your  Notes .....';
-};
 
-const addNote = function(title, body) {
+const addNote = (title, body) => {
 	const notes = loadNotes();
 	
 	// const duplicateNotes = notes.filter((note) => note.title === title)
@@ -23,13 +20,12 @@ const addNote = function(title, body) {
     // console.log(notes);
 };
 
-
-const saveNotes = function (notes)  {
+const saveNotes = (notes) =>  {
 	const dataJSON = JSON.stringify(notes);
 	fs.writeFileSync('notes.json', dataJSON);
 };
 
-const loadNotes = function() {
+const loadNotes = () => {
 	try {
 		const dataBuffer = fs.readFileSync('notes.json');
 		const dataJSON = dataBuffer.toString();
@@ -38,7 +34,8 @@ const loadNotes = function() {
 		return [];
 	}
 };
-const removeNote =  function (title)  {
+
+const removeNote = (title) => {
 	const notes = loadNotes();
 	const notesToKeep = notes.filter((note) => note.title !== title);
 
@@ -50,7 +47,7 @@ const removeNote =  function (title)  {
 	}
 };
 
-const listNotes = function ()  {
+const listNotes =  () => {
 	const notes = loadNotes();
 	console.log(chalk.yellow.inverse('Your Note'));
 	notes.forEach((note) => {
@@ -58,23 +55,23 @@ const listNotes = function ()  {
 	});
 };
 
-// const readNote = () =>{
-//     const notes = loadNotes();
-//    const foundNote =notes.find((note)=> note.title === title)
-// if(foundNote){
-//     console.log('notes found')
-//     saveNotes(foundNote)
-// }else{
-//     console.log('Error no note')
-// }
+ const readNote = (title) => {
+        const notes = loadNotes();
+       const foundNote = notes.find((note)=> note.title === title)
+    if(foundNote){
+        console.log('notes found')
+        console.log('Note Title :' , chalk.green.italic(foundNote.title));
 
-//     console.log('Reading a notes', notes)
-// }
+        console.log("Note Body :", chalk.greenBright.inverse(foundNote.body));
+        
+    }else{
+        console.log(chalk.red.inverse('Unable to find Note'));
+    }
+}
 
 module.exports = {
-	getNotes: getNotes,
-	addNote: addNote,
-	removeNote: removeNote
-	// listNotes: listNotes
-	// readNote: readNote
-};
+    addNote: addNote,
+    removeNote: removeNote,
+    listNotes: listNotes,
+    readNote: readNote
+}
