@@ -5,8 +5,9 @@ const chalk = require('chalk');
 const addNote = (title, body) => {
 	const notes = loadNotes();
 	
-	// const duplicateNotes = notes.filter((note) => note.title === title)
-	const duplicateNote = notes.find((note)=>note.title === title)
+	debugger
+     
+    const duplicateNote = notes.find((note)=>note.title === title)
 	if(!duplicateNote){
 	    notes.push({
 	        title: title,
@@ -63,7 +64,7 @@ const listNotes =  () => {
         console.log('Note Title :' , chalk.green.italic(foundNote.title));
 
         console.log("Note Body :", chalk.greenBright.inverse(foundNote.body));
-        
+        saveNotes(foundNote)
     }else{
         console.log(chalk.red.inverse('Unable to find Note'));
     }
